@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity (name = "customer")
 @Table(name = "TB_CUSTOMER")
 public class Customer {
 

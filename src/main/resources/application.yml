@@ -9,3 +9,6 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
+    flyway:
+        locations:
+            - filesystem:src/main/resources/db/migration
