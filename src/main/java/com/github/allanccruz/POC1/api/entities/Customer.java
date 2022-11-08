@@ -1,17 +1,20 @@
 package com.github.allanccruz.POC1.api.entities;
 
 import com.github.allanccruz.POC1.api.enums.DocumentType;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-@Entity (name = "customer")
-@Table(name = "TB_CUSTOMER")
+@Data
+@Entity
+@Table(name = "tb_customer")
 public class Customer {
 
+    @org.hibernate.annotations.Type(type="uuid-char")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false)
