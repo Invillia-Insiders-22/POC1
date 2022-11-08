@@ -1,4 +1,4 @@
-create table address (
+create table tb_address (
 	id varchar(255) primary key,
 	city varchar(255) not null,
 	neighborhood varchar(255) not null,
@@ -6,5 +6,5 @@ create table address (
 	complement varchar(255),
 	cep varchar(255) not null,
 	customer_id varchar(255) not null,
-	foreign key (customer_id) references customer(id)
+	foreign key (customer_id) references tb_customer(id)
 );
