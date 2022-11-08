@@ -24,6 +24,7 @@ public class Customer {
     private String document;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private DocumentType documentType;
 
     @Column(nullable = false)

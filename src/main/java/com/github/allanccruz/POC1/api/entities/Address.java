@@ -11,14 +11,23 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
+    @Column(nullable = false)
     private String city;
 
+    @Column(nullable = false)
     private String neighborhood;
 
-    private String number;
+    @Column(nullable = false, name = "address_number")
+    private String addressNumber;
 
+    @Column
     private String complement;
 
+    @Column(nullable = false)
     private String cep;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
 }
