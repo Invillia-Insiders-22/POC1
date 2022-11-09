@@ -24,7 +24,7 @@ public class CustomerService {
         return customerRepository.save(mapper.map(customerDto, Customer.class));
     }
 
-    public Optional<Customer> findById(UUID id) {
-        return customerRepository.findById(id);
+    public Customer findById(UUID id) {
+        return customerRepository.findById(id).orElseThrow(() -> new RuntimeException());
     }
 }

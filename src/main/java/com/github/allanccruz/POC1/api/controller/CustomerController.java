@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class CustomerController {
     private final ModelMapper mapper;
 
     @GetMapping(value = "/customers/{id}")
-    public Optional<Customer> findById(@PathVariable UUID id){
+    public Customer findById(@PathVariable UUID id){
         return customerService.findById(id);
     }
 
@@ -34,9 +35,9 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(customerService.save(customerDto), CustomerResponseDto.class));
     }
 
-    @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> getAllCustomers(){
-        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
-    }
+//    @GetMapping("/customers")
+//    public ResponseEntity<List<Customer>> getAllCustomers(){
+//        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
+//    }
 
 }

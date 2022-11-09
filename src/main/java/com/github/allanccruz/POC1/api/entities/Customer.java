@@ -1,5 +1,6 @@
 package com.github.allanccruz.POC1.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.allanccruz.POC1.api.enums.DocumentType;
 import lombok.Data;
 
@@ -33,10 +34,8 @@ public class Customer {
     @Column(nullable = false)
     private String phoneNumber;
 
-//    @Column (nullable = false)
-//    private List<Address> addresses;
-//
-//    @Column(nullable = false)
-//    private Address mainAddress;
+    @JsonIgnore
+    @OneToMany (mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Address> addresses;
 
 }
