@@ -35,9 +35,14 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(customerService.save(customerDto), CustomerResponseDto.class));
     }
 
-//    @GetMapping("/customers")
-//    public ResponseEntity<List<Customer>> getAllCustomers(){
-//        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
-//    }
+    @GetMapping("/customers")
+    public ResponseEntity<List<Customer>> getAllCustomers(){
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
+    }
 
+    @DeleteMapping(value = "/customers/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id){
+        customerService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
