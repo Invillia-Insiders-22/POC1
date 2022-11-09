@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,5 +27,9 @@ public class CustomerService {
 
     public Optional<Customer> findById(UUID id) {
         return customerRepository.findById(id);
+    }
+
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 }
