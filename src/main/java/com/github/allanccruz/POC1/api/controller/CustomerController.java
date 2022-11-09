@@ -1,9 +1,11 @@
 package com.github.allanccruz.POC1.api.controller;
 
-import com.github.allanccruz.POC1.api.dto.CustomerDto;
+import com.github.allanccruz.POC1.api.dto.request.CustomerRequestDto;
+import com.github.allanccruz.POC1.api.dto.response.CustomerResponseDto;
 import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.service.CustomerService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final ModelMapper mapper;
 
     @PostMapping(value = "/customers", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> saveCustomer(@RequestBody Customer customer) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(customer));
+    public ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody CustomerRequestDto customerDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(customerService.save(customerDto), CustomerResponseDto.class));
     }
 
     @GetMapping("/customers")
