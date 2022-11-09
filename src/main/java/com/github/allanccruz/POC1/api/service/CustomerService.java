@@ -5,7 +5,10 @@ import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 
@@ -25,11 +28,17 @@ public class CustomerService {
         return customerRepository.save(mapper.map(customerDto, Customer.class));
     }
 
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
+    }
+
     public Optional<Customer> findById(UUID id) {
         return customerRepository.findById(id);
     }
 
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
+    public void deleteById(UUID id) {
+        Optional<Customer> courseOptional = customerRepository.findById(id);
+        courseOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer does not exist"));
+        customerRepository.deleteById(id);
     }
 }
