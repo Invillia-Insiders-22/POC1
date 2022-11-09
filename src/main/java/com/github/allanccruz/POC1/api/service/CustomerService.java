@@ -5,6 +5,9 @@ import com.github.allanccruz.POC1.api.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -17,5 +20,9 @@ public class CustomerService {
     @Transactional
     public Customer save (Customer customer) {
         return customerRepository.save(customer);
+    }
+
+    public Optional<Customer> findById(UUID id) {
+        return customerRepository.findById(id);
     }
 }
