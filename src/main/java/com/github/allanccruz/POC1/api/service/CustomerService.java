@@ -5,7 +5,9 @@ import com.github.allanccruz.POC1.api.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -20,7 +22,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
+    public Optional<Customer> findById(UUID id) {
+        return customerRepository.findById(id);
     }
 }

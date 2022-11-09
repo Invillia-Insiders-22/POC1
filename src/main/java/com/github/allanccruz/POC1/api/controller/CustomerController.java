@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -18,6 +20,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    @GetMapping(value = "/customers/{id}")
+    public Optional<Customer> findById(@PathVariable UUID id){
+        return customerService.findById(id);
+    }
 
     @PostMapping(value = "/customers", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveCustomer(@RequestBody Customer customer) {
