@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -23,7 +23,7 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/customers/{id}")
-    public List<Customer> findById(@PathVariable UUID id){
+    public Optional<Customer> findById(@PathVariable UUID id){
         return customerService.findById(id);
     }
 
