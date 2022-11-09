@@ -1,14 +1,20 @@
 package com.github.allanccruz.POC1.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_address")
+@Data
 public class Address {
 
+    @Type(type = "uuid-char")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false)
@@ -25,6 +31,8 @@ public class Address {
 
     @Column(nullable = false)
     private String cep;
+//
+//    private Boolean mainAddress;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

@@ -28,15 +28,15 @@ public class CustomerService {
         return customerRepository.save(mapper.map(customerDto, Customer.class));
     }
 
+    public Customer findById(UUID id) {
+        return customerRepository.findById(id).orElseThrow(() -> new RuntimeException());
+    }
+
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }
 
-    public Optional<Customer> findById(UUID id) {
-        return customerRepository.findById(id);
-    }
-
-    public void deleteById(UUID id) {
+    public void deleteById (UUID id) {
         Optional<Customer> courseOptional = customerRepository.findById(id);
         courseOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer does not exist"));
         customerRepository.deleteById(id);

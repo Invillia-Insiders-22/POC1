@@ -25,6 +25,11 @@ public class CustomerController {
     private final CustomerService customerService;
     private final ModelMapper mapper;
 
+    @GetMapping(value = "/customers/{id}")
+    public Customer findById(@PathVariable UUID id){
+        return customerService.findById(id);
+    }
+
     @PostMapping(value = "/customers", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody CustomerRequestDto customerDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(customerService.save(customerDto), CustomerResponseDto.class));
@@ -33,11 +38,6 @@ public class CustomerController {
     @GetMapping("/customers")
     public ResponseEntity<List<Customer>> getAllCustomers(){
         return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
-    }
-
-    @GetMapping(value = "/customers/{id}")
-    public Optional<Customer> findById(@PathVariable UUID id){
-        return customerService.findById(id);
     }
 
     @DeleteMapping(value = "/customers/{id}")
