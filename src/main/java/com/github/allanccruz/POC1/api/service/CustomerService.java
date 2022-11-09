@@ -5,6 +5,7 @@ import com.github.allanccruz.POC1.api.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -17,5 +18,9 @@ public class CustomerService {
     @Transactional
     public Customer save (Customer customer) {
         return customerRepository.save(customer);
+    }
+
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 }

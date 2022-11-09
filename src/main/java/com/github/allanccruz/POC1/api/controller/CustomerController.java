@@ -5,10 +5,9 @@ import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -25,6 +24,11 @@ public class CustomerController {
     @PostMapping(value = "/customers", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> saveCustomer(@RequestBody Customer customer) {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(customer));
+    }
+
+    @GetMapping("/customers")
+    public ResponseEntity<List<Customer>> getAllCustomers(){
+        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
     }
 
 }
