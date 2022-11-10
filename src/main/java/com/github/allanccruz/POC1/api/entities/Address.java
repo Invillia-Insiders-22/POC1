@@ -31,11 +31,10 @@ public class Address {
 
     @Column(nullable = false)
     private String cep;
-//
-//    private Boolean mainAddress;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    //  private Boolean mainAddress;
 }

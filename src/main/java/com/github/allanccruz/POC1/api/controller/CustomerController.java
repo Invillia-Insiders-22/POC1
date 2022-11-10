@@ -23,15 +23,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("api/poc1")
 public class CustomerController {
 
-    private final CustomerService customerService;
     private final ModelMapper mapper;
+    private final CustomerService customerService;
 
     @GetMapping(value = "/customers/{id}")
     public ResponseEntity<CustomerResponseDto> findById(@PathVariable UUID id){
         return ResponseEntity.ok().body(mapper.map(customerService.findById(id), CustomerResponseDto.class));
     }
 
-    @PostMapping(value = "/customers", consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/customers")
     public ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody CustomerRequestDto customerDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(customerService.save(customerDto), CustomerResponseDto.class));
     }
