@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -26,8 +27,8 @@ public class CustomerController {
     private final ModelMapper mapper;
 
     @GetMapping(value = "/customers/{id}")
-    public Customer findById(@PathVariable UUID id){
-        return customerService.findById(id);
+    public ResponseEntity<CustomerResponseDto> findById(@PathVariable UUID id){
+        return ResponseEntity.ok().body(mapper.map(customerService.findById(id), CustomerResponseDto.class));
     }
 
     @PostMapping(value = "/customers", consumes = APPLICATION_JSON_VALUE)
@@ -36,8 +37,11 @@ public class CustomerController {
     }
 
     @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> getAllCustomers(){
-        return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll());
+    public ResponseEntity<List<CustomerResponseDto>> getAllCustomers(){
+        return ResponseEntity.ok().body(customerService.findAll()
+                .stream()
+                .map(n -> (mapper.map(n, CustomerResponseDto.class)))
+                .collect(Collectors.toList()));
     }
 
     @DeleteMapping(value = "/customers/{id}")
