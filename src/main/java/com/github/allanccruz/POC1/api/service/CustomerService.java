@@ -6,12 +6,10 @@ import com.github.allanccruz.POC1.api.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,8 +35,18 @@ public class CustomerService {
     }
 
     public void deleteById (UUID id) {
-        Optional<Customer> courseOptional = customerRepository.findById(id);
-        courseOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer does not exist"));
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        customerOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer does not exist!"));
         customerRepository.deleteById(id);
+    }
+
+    public Customer update(CustomerRequestDto customerRequestDto) {
+        if(existById(customerRequestDto.getId())){
+            return customerRepository.save(mapper.map(customerRequestDto, Customer.class));
+        } else throw new RuntimeException("Customer does not exist!");
+    }
+
+    private boolean existById(UUID id){
+        return customerRepository.existsById(id);
     }
 }
