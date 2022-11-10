@@ -11,10 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -48,5 +46,12 @@ public class CustomerController {
     public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id){
         customerService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/customers/{id}")
+    public ResponseEntity<CustomerResponseDto> update(@PathVariable("id") UUID id, @RequestBody CustomerRequestDto customerRequestDto){
+        customerRequestDto.setId(id);
+        Customer customer = customerService.update(customerRequestDto);
+        return ResponseEntity.ok().body(mapper.map(customer, CustomerResponseDto.class));
     }
 }
