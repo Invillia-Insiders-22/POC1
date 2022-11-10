@@ -35,12 +35,18 @@ public class CustomerService {
     }
 
     public void deleteById (UUID id) {
-        Optional<Customer> courseOptional = customerRepository.findById(id);
-        courseOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer does not exist"));
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        customerOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer does not exist!"));
         customerRepository.deleteById(id);
     }
 
     public Customer update(CustomerRequestDto customerRequestDto) {
-        return customerRepository.save(mapper.map(customerRequestDto, Customer.class));
+        if(existById(customerRequestDto.getId())){
+            return customerRepository.save(mapper.map(customerRequestDto, Customer.class));
+        } else throw new RuntimeException("Customer does not exist!");
+    }
+
+    private boolean existById(UUID id){
+        return customerRepository.existsById(id);
     }
 }
