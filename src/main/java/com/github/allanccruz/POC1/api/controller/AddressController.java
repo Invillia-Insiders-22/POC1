@@ -27,6 +27,7 @@ public class AddressController {
     public ResponseEntity<Address> save(@PathVariable UUID id, @RequestBody Address address) {
         Customer customer = customerService.findById(id);
         address.setCustomer(customer);
+        customer.getAddresses().add(address);
         return ResponseEntity.status(CREATED).body(addressService.create(address));
     }
 }

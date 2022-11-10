@@ -31,7 +31,7 @@ public class CustomerController {
         return ResponseEntity.ok().body(mapper.map(customerService.findById(id), CustomerResponseDto.class));
     }
 
-    @PostMapping(value = "/customers", consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/customers")
     public ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody CustomerRequestDto customerDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.map(customerService.save(customerDto), CustomerResponseDto.class));
     }
