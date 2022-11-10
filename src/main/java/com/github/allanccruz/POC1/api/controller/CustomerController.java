@@ -23,8 +23,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("api/poc1")
 public class CustomerController {
 
-    private final CustomerService customerService;
     private final ModelMapper mapper;
+    private final CustomerService customerService;
 
     @GetMapping(value = "/customers/{id}")
     public ResponseEntity<CustomerResponseDto> findById(@PathVariable UUID id){
