@@ -5,6 +5,7 @@ import com.github.allanccruz.POC1.api.enums.DocumentType;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class Customer {
     private String phoneNumber;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<Address> addresses;
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.EAGER)
+    private List<Address> addresses = new ArrayList<>();
 
 }
