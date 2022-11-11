@@ -6,17 +6,21 @@ import com.github.allanccruz.POC1.api.dto.response.CustomerResponseDto;
 import com.github.allanccruz.POC1.api.entities.Address;
 import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.service.CustomerService;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
@@ -24,10 +28,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomerController {
 
     private final ModelMapper mapper;
+
     private final CustomerService customerService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CustomerResponseDto> findById(@PathVariable UUID id){
+    public ResponseEntity<CustomerResponseDto> findById(@PathVariable UUID id) {
         return ResponseEntity.ok().body(mapper.map(customerService.findById(id), CustomerResponseDto.class));
     }
 
@@ -37,7 +42,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerResponseDto>> getAllCustomers(){
+    public ResponseEntity<List<CustomerResponseDto>> getAllCustomers() {
         return ResponseEntity.ok().body(customerService.findAll()
                 .stream()
                 .map(n -> (mapper.map(n, CustomerResponseDto.class)))
@@ -45,19 +50,19 @@ public class CustomerController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id) {
         customerService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CustomerResponseDto> update(@PathVariable("id") UUID id, @RequestBody CustomerRequestDto customerRequestDto){
+    public ResponseEntity<CustomerResponseDto> update(@PathVariable("id") UUID id, @RequestBody CustomerRequestDto customerRequestDto) {
         customerRequestDto.setId(id);
         Customer customer = customerService.update(customerRequestDto);
         return ResponseEntity.ok().body(mapper.map(customer, CustomerResponseDto.class));
     }
 
-    @GetMapping (value = "/address/{id}")
+    @GetMapping(value = "/address/{id}")
     public ResponseEntity<List<AddressResponseDto>> getAllAddressByCustomer(@PathVariable UUID id) {
         Customer customer = customerService.findById(id);
         List<Address> addressList = customer.getAddresses();
