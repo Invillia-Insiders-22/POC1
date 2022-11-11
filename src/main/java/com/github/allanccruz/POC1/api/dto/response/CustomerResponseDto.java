@@ -1,6 +1,7 @@
 package com.github.allanccruz.POC1.api.dto.response;
 
 import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerResponseDto {
 
-    protected List<AddressResponseDto> addresses;
+    private UUID id;
 
     private String name;
 
@@ -18,5 +19,6 @@ public class CustomerResponseDto {
 
     private String phoneNumber;
 
-    private String id;
+    private List<AddressResponseDto> addresses;
+
 }
