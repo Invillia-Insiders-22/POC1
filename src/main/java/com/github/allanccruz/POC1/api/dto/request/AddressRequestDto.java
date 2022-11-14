@@ -21,6 +21,5 @@ public class AddressRequestDto {
     private String complement;
 
     private String cep;
-
-    private String teste;
+    
 }
