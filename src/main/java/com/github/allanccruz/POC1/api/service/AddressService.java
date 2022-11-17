@@ -5,13 +5,14 @@ import com.github.allanccruz.POC1.api.dto.request.AddressRequestDto;
 import com.github.allanccruz.POC1.api.entities.Address;
 import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.repository.AddressRepository;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
