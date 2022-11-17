@@ -1,10 +1,10 @@
 package com.github.allanccruz.POC1.api.dto.request;
 
+import com.github.allanccruz.POC1.api.entities.Customer;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +22,7 @@ public class AddressRequestDto {
     private String complement;
 
     private String cep;
+
+    private Customer customer;
+
 }
