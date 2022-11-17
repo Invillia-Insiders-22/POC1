@@ -29,7 +29,7 @@ public class AddressController {
 
     private final CustomerService customerService;
 
-    @PostMapping(value = "/address/{id}")
+    @PostMapping(value = "/{id}")
     @Operation(summary = "Register an address for a customer")
     public ResponseEntity<AddressResponseDto> save(@PathVariable UUID id, @RequestBody AddressRequestDto addressRequestDto) {
         Customer customer = customerService.findById(id);
@@ -38,7 +38,7 @@ public class AddressController {
         return ResponseEntity.status(CREATED).body(mapper.map(addressService.create(addressRequestDto), AddressResponseDto.class));
     }
 
-    @DeleteMapping(value = "/address/{id}")
+    @DeleteMapping(value = "/{id}")
     @Operation(summary = "Delete address by Id")
     public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
         addressService.deleteById(id);
