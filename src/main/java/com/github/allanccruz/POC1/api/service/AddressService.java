@@ -22,13 +22,11 @@ public class AddressService {
     private AddressRepository addressRepository;
 
     @Transactional
-    public Address create(AddressRequestDto addressDto) {
-        return addressRepository.save(mapper.map(addressDto, Address.class));
+    public Address create(AddressRequestDto addressRequestDto) {
+        return addressRepository.save(mapper.map(addressRequestDto, Address.class));
     }
 
-    @Transactional
     public void deleteById(UUID addressId) {
-
         Optional<Address> address = addressRepository.findById(addressId);
 
         if (address.isEmpty()) {
@@ -38,26 +36,19 @@ public class AddressService {
         List<Address> addresses = findByCustomer(address.get().getCustomer());
 
         if (addresses.size() <= 1) {
-            throw new AddressNotFoundException(" The address you tried" +
-                    " to delete is the only address of this client. ");
+            throw new AddressNotFoundException("The address you tried to delete is the only address of this client.");
         }
 
         addressRepository.deleteById(addressId);
-
     }
 
     @Transactional
     public Address findById(UUID addressId) {
         return addressRepository.findById(addressId).orElseThrow(() -> new AddressNotFoundException("Address Id not found"));
-
     }
 
     @Transactional
     List<Address> findByCustomer(Customer customer) {
-
         return addressRepository.findByCustomer(customer);
-
     }
-
-
 }

@@ -1,11 +1,10 @@
 package com.github.allanccruz.POC1.api.dto.request;
 
 import com.github.allanccruz.POC1.api.enums.DocumentType;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
