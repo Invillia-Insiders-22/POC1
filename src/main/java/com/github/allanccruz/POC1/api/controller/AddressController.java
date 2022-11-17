@@ -3,9 +3,8 @@ package com.github.allanccruz.POC1.api.controller;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+import com.github.allanccruz.POC1.api.dto.request.AddressRequestDto;
 import com.github.allanccruz.POC1.api.dto.response.AddressResponseDto;
-import com.github.allanccruz.POC1.api.entities.Address;
-import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.service.AddressService;
 import com.github.allanccruz.POC1.api.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
