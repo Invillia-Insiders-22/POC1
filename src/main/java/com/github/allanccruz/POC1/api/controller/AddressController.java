@@ -8,6 +8,8 @@ import com.github.allanccruz.POC1.api.entities.Address;
 import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.service.AddressService;
 import com.github.allanccruz.POC1.api.service.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
+@Tag(name = "Address Controller")
 @RequestMapping(value = "api/poc1")
 public class AddressController {
 
@@ -32,6 +35,7 @@ public class AddressController {
     private final CustomerService customerService;
 
     @PostMapping(value = "/address/{id}")
+    @Operation(summary = "Register an address for a customer")
     public ResponseEntity<AddressResponseDto> save(@PathVariable UUID id, @RequestBody Address address) {
         Customer customer = customerService.findById(id);
         address.setCustomer(customer);
@@ -40,6 +44,7 @@ public class AddressController {
     }
 
     @DeleteMapping(value = "/address/{id}")
+    @Operation(summary = "Delete a customer address")
     @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable("id") UUID id) {
 
