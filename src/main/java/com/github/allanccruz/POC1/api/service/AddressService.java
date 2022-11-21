@@ -1,5 +1,6 @@
 package com.github.allanccruz.POC1.api.service;
 
+import com.github.allanccruz.POC1.api.Exception.AddressMaxLimitException;
 import com.github.allanccruz.POC1.api.Exception.AddressNotFoundException;
 import com.github.allanccruz.POC1.api.dto.request.AddressRequestDto;
 import com.github.allanccruz.POC1.api.dto.request.CustomerRequestDto;
@@ -29,6 +30,9 @@ public class AddressService {
     public Address create(AddressRequestDto addressRequestDto) {
         Customer customer = customerService.findById(addressRequestDto.getCustomerDto().getId());
         addressRequestDto.setCustomerDto(mapper.map(customer, CustomerRequestDto.class));
+        if(customer.getAddresses().size() > 5){
+            throw new AddressMaxLimitException("Maximum number of registered addresses reached");
+        }
         return addressRepository.save(mapper.map(addressRequestDto, Address.class));
     }
 
