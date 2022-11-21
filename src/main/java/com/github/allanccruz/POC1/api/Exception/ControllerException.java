@@ -1,5 +1,6 @@
 package com.github.allanccruz.POC1.api.Exception;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import com.github.allanccruz.POC1.api.Exception.dto.ErrorMessageDto;
@@ -18,5 +19,15 @@ public class ControllerException {
                 request.getRequestURI()
         );
         return ResponseEntity.status(NOT_FOUND).body(errorDto);
+    }
+
+    @ExceptionHandler(AddressMaxLimitException.class)
+    public ResponseEntity<ErrorMessageDto> AdressMaxLimit (AddressMaxLimitException exception, HttpServletRequest request) {
+        ErrorMessageDto errorDto = new ErrorMessageDto(
+                CONFLICT.value(),
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(CONFLICT).body(errorDto);
     }
 }
