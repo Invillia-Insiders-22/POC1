@@ -23,8 +23,8 @@ import lombok.Data;
 @Table(name = "tb_customer")
 public class Customer {
 
-    @org.hibernate.annotations.Type(type = "uuid-char")
     @Id
+    @org.hibernate.annotations.Type(type = "uuid-char")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
