@@ -2,6 +2,7 @@ package com.github.allanccruz.POC1.api.service;
 
 import com.github.allanccruz.POC1.api.Exception.AddressNotFoundException;
 import com.github.allanccruz.POC1.api.dto.request.AddressRequestDto;
+import com.github.allanccruz.POC1.api.dto.request.CustomerRequestDto;
 import com.github.allanccruz.POC1.api.entities.Address;
 import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.repository.AddressRepository;
@@ -20,10 +21,14 @@ public class AddressService {
 
     private final ModelMapper mapper;
 
-    private AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
+
+    private final CustomerService customerService;
 
     @Transactional
     public Address create(AddressRequestDto addressRequestDto) {
+        Customer customer = customerService.findById(addressRequestDto.getCustomerDto().getId());
+        addressRequestDto.setCustomerDto(mapper.map(customer, CustomerRequestDto.class));
         return addressRepository.save(mapper.map(addressRequestDto, Address.class));
     }
 
