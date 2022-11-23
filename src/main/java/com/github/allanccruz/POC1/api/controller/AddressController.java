@@ -7,6 +7,7 @@ import com.github.allanccruz.POC1.api.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +17,17 @@ import java.util.UUID;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
+@NoArgsConstructor
 @AllArgsConstructor
 @Tag(name = "Address Controller")
 @RequestMapping(value = "api/poc1/address")
 public class AddressController {
 
-    private final ModelMapper mapper;
+    private ModelMapper mapper;
 
-    private final AddressService addressService;
+    private AddressService addressService;
 
-    private final CustomerService customerService;
+    private CustomerService customerService;
 
     @PostMapping
     @Operation(summary = "Register an address for a customer")
