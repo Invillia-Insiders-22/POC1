@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,16 +22,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@NoArgsConstructor
 @AllArgsConstructor
 @Tag(name = "Address Controller")
 @RequestMapping(value = "api/poc1/address")
 public class AddressController {
 
-    private final ModelMapper mapper;
+    private ModelMapper mapper;
 
-    private final AddressService addressService;
+    private AddressService addressService;
 
-    private final CustomerService customerService;
+    private CustomerService customerService;
 
     @PostMapping
     @Operation(summary = "Register an address for a customer")
