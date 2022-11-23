@@ -9,7 +9,9 @@ import com.github.allanccruz.POC1.api.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +21,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
+@NoArgsConstructor
 @AllArgsConstructor
 @Tag(name = "Customer Controller")
 @RequestMapping("api/poc1/customers")
 public class CustomerController {
 
-    private final ModelMapper mapper;
+    private final ModelMapper mapper = new ModelMapper();
 
-    private final CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
     @GetMapping(value = "/{id}")
     @Operation(summary = "Get customer by Id")
