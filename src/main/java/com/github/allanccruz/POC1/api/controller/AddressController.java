@@ -1,23 +1,19 @@
 package com.github.allanccruz.POC1.api.controller;
 
-import static org.springframework.http.HttpStatus.CREATED;
-
 import com.github.allanccruz.POC1.api.dto.request.AddressRequestDto;
 import com.github.allanccruz.POC1.api.dto.response.AddressResponseDto;
 import com.github.allanccruz.POC1.api.service.AddressService;
 import com.github.allanccruz.POC1.api.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @AllArgsConstructor
@@ -42,5 +38,12 @@ public class AddressController {
     public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
         addressService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<AddressResponseDto> update(@PathVariable UUID id, @RequestBody AddressRequestDto addressRequestDto) {
+        addressRequestDto.setId(id);
+        addressService.update(addressRequestDto);
+        return ResponseEntity.ok().body(mapper.map(addressService.findById(id), AddressResponseDto.class));
     }
 }
