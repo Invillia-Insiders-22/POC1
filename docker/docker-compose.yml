@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.22
+    container_name: poc_container
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: poc
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root

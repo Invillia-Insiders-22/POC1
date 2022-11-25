@@ -161,3 +161,4 @@ buildNumber.properties
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij+iml,intellij+all,maven
 
 src/main/resources/application-dev.yml
+/config/.env
