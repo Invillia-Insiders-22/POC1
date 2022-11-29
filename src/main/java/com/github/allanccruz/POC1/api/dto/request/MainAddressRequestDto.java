@@ -9,22 +9,10 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressRequestDto {
+public class MainAddressRequestDto {
 
     private UUID id;
 
-    private String city;
-
-    private String neighborhood;
-
-    private String addressNumber;
-
-    private String complement;
-
-    private String cep;
-
     private CustomerRequestDto customerDto;
-
-    private Boolean mainAddress;
 
 }
