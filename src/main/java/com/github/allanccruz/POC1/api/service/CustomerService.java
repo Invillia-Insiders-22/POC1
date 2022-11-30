@@ -4,15 +4,14 @@ import com.github.allanccruz.POC1.api.Exception.CustomerNotFoundException;
 import com.github.allanccruz.POC1.api.dto.request.CustomerRequestDto;
 import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.repository.CustomerRepository;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import javax.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
@@ -35,12 +34,14 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    @Transactional
     public void deleteById(UUID id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         customerOptional.orElseThrow(() -> new CustomerNotFoundException("Customer does not exist!"));
         customerRepository.deleteById(id);
     }
 
+    @Transactional
     public Customer update(CustomerRequestDto customerRequestDto) {
         if (existById(customerRequestDto.getId())) {
             return customerRepository.save(mapper.map(customerRequestDto, Customer.class));

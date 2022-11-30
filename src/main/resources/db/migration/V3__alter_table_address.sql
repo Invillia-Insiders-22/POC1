@@ -1,0 +1,1 @@
+alter table tb_address add main_address boolean;

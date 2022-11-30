@@ -1,9 +1,10 @@
 package com.github.allanccruz.POC1.api.dto.response;
 
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -21,5 +22,7 @@ public class AddressResponseDto {
     private String complement;
 
     private String cep;
+
+    private Boolean mainAddress;
 
 }

@@ -5,6 +5,7 @@ import com.github.allanccruz.POC1.api.Exception.AddressNotFoundException;
 import com.github.allanccruz.POC1.api.Exception.CustomerNotFoundException;
 import com.github.allanccruz.POC1.api.dto.request.AddressRequestDto;
 import com.github.allanccruz.POC1.api.dto.request.CustomerRequestDto;
+import com.github.allanccruz.POC1.api.dto.request.MainAddressRequestDto;
 import com.github.allanccruz.POC1.api.entities.Address;
 import com.github.allanccruz.POC1.api.entities.Customer;
 import com.github.allanccruz.POC1.api.repository.AddressRepository;
@@ -31,12 +32,24 @@ public class AddressService {
     public Address create(AddressRequestDto addressRequestDto) {
         Customer customer = customerService.findById(addressRequestDto.getCustomerDto().getId());
         addressRequestDto.setCustomerDto(mapper.map(customer, CustomerRequestDto.class));
+
+        if (customer.getAddresses().isEmpty()) {
+            addressRequestDto.setMainAddress(true);
+        } else {
+            addressRequestDto.setMainAddress(false);
+        }
+
         if (customer.getAddresses().size() > 5) {
             throw new AddressMaxLimitException("Maximum number of registered addresses reached");
         }
         return addressRepository.save(mapper.map(addressRequestDto, Address.class));
     }
 
+    public Address findById(UUID addressId) {
+        return addressRepository.findById(addressId).orElseThrow(() -> new AddressNotFoundException("Address Id not found"));
+    }
+
+    @Transactional
     public void deleteById(UUID addressId) {
         Optional<Address> address = addressRepository.findById(addressId);
 
@@ -54,20 +67,31 @@ public class AddressService {
     }
 
     @Transactional
-    public Address findById(UUID addressId) {
-        return addressRepository.findById(addressId).orElseThrow(() -> new AddressNotFoundException("Address Id not found"));
-    }
-
-    @Transactional
     List<Address> findByCustomer(Customer customer) {
         return addressRepository.findByCustomer(customer);
     }
 
+    @Transactional
     public Address update(AddressRequestDto addressRequestDto) {
         if (addressRepository.existsById(addressRequestDto.getId())) {
             return addressRepository.save(mapper.map(addressRequestDto, Address.class));
         } else {
             throw new CustomerNotFoundException("Address Id not found");
         }
+    }
+
+    @Transactional
+    public Address updateToMainAddress(MainAddressRequestDto mainAddressRequestDto) {
+        Address address = findById(mainAddressRequestDto.getId());
+
+        address.getCustomer().getAddresses()
+                .forEach(a -> {
+                    a.setMainAddress(false);
+                    addressRepository.save(a);
+                });
+
+        address.setMainAddress(true);
+
+        return addressRepository.save(address);
     }
 }
