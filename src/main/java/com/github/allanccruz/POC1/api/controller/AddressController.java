@@ -46,9 +46,8 @@ public class AddressController {
     }
 
     @PutMapping(value = "/main-address/{id}")
-    public ResponseEntity<AddressResponseDto> updateToMainAddress(@PathVariable UUID id,
-                                                                  @RequestBody MainAddressRequestDto mainAddressRequestDto) {
-        mainAddressRequestDto.setId(id);
+    public ResponseEntity<AddressResponseDto> updateToMainAddress(@PathVariable UUID id) {
+        var mainAddressRequestDto = MainAddressRequestDto.builder().id(id).build();
         addressService.updateToMainAddress(mainAddressRequestDto);
         return ResponseEntity.ok().body(mapper.map(addressService.findById(id), AddressResponseDto.class));
     }

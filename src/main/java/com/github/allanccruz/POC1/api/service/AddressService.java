@@ -82,15 +82,14 @@ public class AddressService {
 
     @Transactional
     public Address updateToMainAddress(MainAddressRequestDto mainAddressRequestDto) {
-        Customer customer = customerService.findById(mainAddressRequestDto.getCustomerDto().getId());
+        Address address = findById(mainAddressRequestDto.getId());
 
-        customer.getAddresses()
+        address.getCustomer().getAddresses()
                 .forEach(a -> {
                     a.setMainAddress(false);
                     addressRepository.save(a);
                 });
 
-        Address address = findById(mainAddressRequestDto.getId());
         address.setMainAddress(true);
 
         return addressRepository.save(address);
